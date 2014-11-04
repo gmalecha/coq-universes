@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <style type="text/css">
+      .scc { border: 1px solid black; margin-top: 2pt; }
+    </style>
+  </head>
+  <body>
+    <div style="float: left;">
+    <form id="data">
+      <input type="button" onclick="compute()" value="compute" />
+      <br />
+      <textarea rows="80" cols="80" id="constraints">
+      </textarea>
+    </form>
+    </div>
+    <div style="float:right;" id="output">
+      OUTPUT
+    </div>
+
+  </body>
+  <script type="application/javascript" src="js/view.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="application/javascript">
+    function compute() {
+      var data = document.getElementById('constraints').value;
+      var graph = parse(data);
+      var sccs = process(graph);
+      sccs.sort(function(a,b) { return b.length - a.length; });
+      var out = $('#output');
+      out.empty();
+      for (var i = 0; i < sccs.length; i++)
+      {
+        x = document.createElement('div');
+	
+        $(x).append(sccs[i].join(', '));
+        $(x).addClass('scc');
+        $('#output').append($(x));
+      }
+    }
+  </script>
+</html>
